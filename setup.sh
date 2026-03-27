@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
+
 # シンボリックリンクを作成するファイルとパスのリスト
 files_and_paths=(
   ".bashrc:$HOME/.bashrc"
@@ -7,7 +9,7 @@ files_and_paths=(
 
 # シンボリックリンクを作成する関数
 create_symlink() {
-  local source_file="$PWD/$1"
+  local source_file="$DOTFILES_DIR/$1"
   local destination_path=$2
 
   # 退避先のファイル名
