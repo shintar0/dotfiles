@@ -120,3 +120,5 @@ alias vim="nvim"
 alias vi="nvim"
 alias docker-compose="docker compose"
 alias cat="batcat"
+# Git aliases
+alias gr="git reset --soft HEAD^"
