@@ -34,7 +34,7 @@ install_packages() {
 # 2. シンボリックリンク作成
 # ============================
 files_and_paths=(
-  ".bashrc:$HOME/.bashrc",
+  ".bashrc:$HOME/.bashrc"
   ".gitconfig:$HOME/.gitconfig"
 )
 
