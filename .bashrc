@@ -2,7 +2,7 @@
 source ~/dotfiles/bash/common.sh
 
 # ===== 環境ごとの設定 =====
-if [ "$DEVCONTAINER" = "true" ]; then
+if [ "$DOTFILES_DEVCONTAINER" = "true" ]; then
   source ~/dotfiles/bash/devcontainer.sh
 else
   # secrets.sh があれば読み込む（無ければ無視）

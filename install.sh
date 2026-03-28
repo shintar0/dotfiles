@@ -6,7 +6,7 @@ DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 # 1. パッケージインストール
 # ============================
 install_packages() {
-  if [ "$DEVCONTAINER" = "true" ]; then
+  if [ "$DOTFILES_DEVCONTAINER" = "true" ]; then
     pkg_file="$DOTFILES_DIR/packages/apt_devcontainer.txt"
   else
     pkg_file="$DOTFILES_DIR/packages/apt_local.txt"
