@@ -3,24 +3,18 @@
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # ============================
-# 1. パッケージインストール
+# 共通：パッケージファイルを読み込んでインストール
 # ============================
-install_packages() {
-  if [ "$DOTFILES_DEVCONTAINER" = "true" ]; then
-    pkg_file="$DOTFILES_DIR/packages/apt_devcontainer.txt"
-  else
-    pkg_file="$DOTFILES_DIR/packages/apt_local.txt"
-  fi
-
-  echo "[INFO] Installing packages from $pkg_file"
+install_from_file() {
+  local pkg_file="$1"
 
   # 空ファイルならスキップ
   if [ ! -s "$pkg_file" ]; then
-    echo "[INFO] No packages to install"
+    echo "[INFO] No packages to install in $pkg_file"
     return
   fi
 
-  sudo apt update
+  echo "[INFO] Installing packages from $pkg_file"
 
   # 1行ずつインストール
   while IFS= read -r pkg; do
@@ -28,6 +22,22 @@ install_packages() {
     [[ -z "$pkg" || "$pkg" =~ ^# ]] && continue
     sudo apt install -y "$pkg"
   done < "$pkg_file"
+}
+
+# ============================
+# 1. パッケージインストール
+# ============================
+install_packages() {
+  sudo apt update
+  # 共通パッケージ
+  install_from_file "$DOTFILES_DIR/packages/apt_common.txt"
+
+  # devcontainer or local
+  if [ "$DOTFILES_DEVCONTAINER" = "true" ]; then
+    install_from_file "$DOTFILES_DIR/packages/apt_devcontainer.txt"
+  else
+    install_from_file "$DOTFILES_DIR/packages/apt_local.txt"
+  fi
 }
 
 # ============================
