@@ -34,7 +34,8 @@ install_packages() {
 # 2. シンボリックリンク作成
 # ============================
 files_and_paths=(
-  ".bashrc:$HOME/.bashrc"
+  ".bashrc:$HOME/.bashrc",
+  ".gitconfig:$HOME/.gitconfig"
 )
 
 create_symlink() {
@@ -59,10 +60,19 @@ create_symlinks() {
   done
 }
 
+# 環境変数による条件分岐（関数）
+check_environment() {
+  if [ "$DOTFILES_GIT_REBASE" = "true" ]; then
+    echo "[INFO] GITのPULLはリベースモードに設定されます"
+    git config --global pull.rebase true
+  fi
+}
+
+
 # ============================
 # 実行フロー
 # ============================
 install_packages
 create_symlinks
-
+check_environment
 echo "[INFO] 完了しました！"
