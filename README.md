@@ -8,24 +8,48 @@
 ## Target
 
 - bash
+- fish
 - git
 
 ## ENV
 
-| 環境変数 | 影響箇所 |
-| --- | --- |
-| DOTFILES_DEVCONTAINER | PackageInstall, Bash |
-| DOTFILES_GIT_REBASE | true -> rebase, 指定なし -> merge |
+### `DOTFILES_DEVCONTAINER`
+
+- PackageInstall
+    - true: `apt_common.txt`+`apt_local.txt`
+    - false: `apt_common.txt`+`apt_devcontainer.txt`
+- Bashのスクリプト
+    - true: `common.sh` + `local.sh` + `secrets.sh`
+    - false: `common.sh` + `devcontainer.sh`
+
+### `DOTFILES_GIT_REBASE`
+
+> 指定なし -> false
+
+- true: `rebase`
+- false: `merge`（gitのデフォルト）
+
+### `DOTFILES_FISH`
+
+> 指定なし -> false
+
+- true: `fish`
+- false: `bash`
 
 ## Usage
 
 - `install.sh`: インストーラ実行コマンド（PKGインストール, SL作成, 設定の反映）
 - `make_executable.sh`: （dev）shファイルを実行可能に一括変更
 
+> [!TIP]
+> VSCodeDevcontainerではDockerfileでrepositoryをclone, `install.sh`を実行すること。dotfilesの変更を適用させる場合はキャッシュを使わずリビルドする必要がある。
+
 ## Structure
 
 ```txt
 dotfiles/
+├ .config/
+│ └ fish/            # fishの設定フォルダ 
 ├ bash/              # envごとの読込設定ファイル
 ├ packages/          # envごとのインストールパッケージファイル
 ├ .bashrc            # bash設定ファイル（ハブ）

@@ -76,6 +76,27 @@ check_environment() {
     echo "[INFO] GITのPULLはリベースモードに設定されます"
     git config --global pull.rebase true
   fi
+
+  # fish（DOTFILES_FISH）
+  if [ "$DOTFILES_FISH" = "true" ]; then
+    # install packages
+    install_from_file "$DOTFILES_DIR/packages/apt_fish.txt"
+    # fisherのinstall
+    fish -c "curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher"
+    # シンボリックリンクの追加
+    files_and_path_fish=(
+      ".config/fish/config.fish:$HOME/.config/fish/config.fish"
+      ".config/fish/fish_plugins:$HOME/.config/fish/fish_plugins"
+    )
+    for entry in "${files_and_path_fish[@]}"; do
+      IFS=":" read -r source_file destination_path <<< "$entry"
+      create_symlink "$source_file" "$destination_path"
+    done
+    # fisher のプラグインインストール（fish 内で実行）
+    fish -c "fisher update"
+    # デフォルトシェルをfishに変更
+    chsh -s /usr/bin/fish
+  fi
 }
 
 
