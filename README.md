@@ -58,3 +58,9 @@ dotfiles/
 ├ make_executable.sh # shファイルを実行可能に一括変更（開発用ファイル）
 └ README.md
 ```
+
+## License
+
+This repository uses a custom license.  
+Use of the software is not recommended. See [LICENSE.md](./LICENSE.md) for details.
+日本語版は [LICENSE.ja.md](./LICENSE.ja.md) を参照してください。
