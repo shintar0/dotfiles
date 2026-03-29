@@ -32,18 +32,22 @@ end
 set -g fish_history shared
 
 # ============================
-# エイリアス
+# 略語展開
 # ============================
 
-alias ll="ls -alF"
-alias la="ls -A"
-alias l="ls -CF"
+# ls
+abbr ll "ls -alF"
+abbr la "ls -A"
+abbr l "ls -CF"
 
-alias gs="git status"
-alias ga="git add"
-alias gc="git commit"
-alias gp="git push"
-alias gl="git pull"
+# git
+abbr gs "git status"
+abbr ga "git add"
+abbr gc "git commit"
+abbr gp "git push"
+abbr gl "git pull"
+abbr gr "git reset --soft HEAD^"
+abbr gbd "git branch --merged main | grep -v "main" | xargs git branch -d"
 
 # ============================
 # 色設定（必要最低限）
