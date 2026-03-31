@@ -37,6 +37,9 @@
 - true: `fish`
 - false: `bash`
 
+> [!IMPORTANT]
+> fishに変更した場合は`sudo reboot`など一度ログアウトしないと反映されないことに注意。
+
 ### `DOTFILES_CLAUDE_CODE`
 
 > 指定なし -> false
