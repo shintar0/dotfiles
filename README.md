@@ -50,6 +50,8 @@ trueの場合のみClaudeCodeのインストールを実施
 
 - `install.sh`: インストーラ実行コマンド（PKGインストール, SL作成, 設定の反映）
 - `make_executable.sh`: （dev）shファイルを実行可能に一括変更
+- `clean.sh`: dotfiles の再インストールを安全に行うためのクリーン処理
+    - `--dry-run`: ドライランオプションをつけることで実行はされず、影響だけ確認できます。
 
 > [!TIP]
 > VSCodeDevcontainerではDockerfileでrepositoryをclone, `install.sh`を実行すること。dotfilesの変更を適用させる場合はキャッシュを使わずリビルドする必要がある。
