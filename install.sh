@@ -97,6 +97,13 @@ check_environment() {
     # デフォルトシェルをfishに変更
     chsh -s /usr/bin/fish
   fi
+
+  # ClaudeCode (DOTFILES_CLAUDE_CODE)
+  if [ "$DOTFILES_CLAUDE_CODE" = "true" ]; then
+    echo "[INFO] ClaudeCodeのインストールを開始します"
+    curl -fsSL https://claude.ai/install.sh | bash
+    echo "[INFO] ClaudeCodeのインストールが完了しました"
+  fi
 }
 
 
