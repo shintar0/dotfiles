@@ -59,6 +59,10 @@ dotfiles/
 └ README.md
 ```
 
+## Docs
+
+その他設計は[こちら](docs.md)を参照
+
 ## License
 
 This repository uses a custom license.  
