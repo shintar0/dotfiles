@@ -25,10 +25,10 @@
 
 ### `DOTFILES_GIT_REBASE`
 
-> 指定なし -> false
+> 指定なし -> true
 
 - true: `rebase`
-- false: `merge`（gitのデフォルト）
+- false: `merge`
 
 ### `DOTFILES_FISH`
 

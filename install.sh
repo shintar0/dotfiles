@@ -75,6 +75,9 @@ check_environment() {
   if [ "$DOTFILES_GIT_REBASE" = "true" ]; then
     echo "[INFO] GITのPULLはリベースモードに設定されます"
     git config --global pull.rebase true
+  else
+    echo "[INFO] GITのPULLはマージモードに設定されます"
+    git config --global pull.rebase false
   fi
 
   # fish（DOTFILES_FISH）
