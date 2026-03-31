@@ -101,8 +101,11 @@ check_environment() {
   # ClaudeCode (DOTFILES_CLAUDE_CODE)
   if [ "$DOTFILES_CLAUDE_CODE" = "true" ]; then
     echo "[INFO] ClaudeCodeのインストールを開始します"
-    curl -fsSL https://claude.ai/install.sh | bash
-    echo "[INFO] ClaudeCodeのインストールが完了しました"
+    if curl -fsSL https://claude.ai/install.sh | bash; then
+      echo "[INFO] ClaudeCodeのインストールが完了しました"
+    else
+      echo "[ERROR] ClaudeCodeのインストールに失敗しました" >&2
+    fi
   fi
 }
 
