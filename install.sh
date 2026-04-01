@@ -46,6 +46,7 @@ install_packages() {
 files_and_paths=(
   ".bashrc:$HOME/.bashrc"
   ".gitconfig:$HOME/.gitconfig"
+  ".claude/CLAUDE.md:$HOME/.claude/CLAUDE.md"
 )
 
 create_symlink() {
@@ -66,6 +67,7 @@ create_symlink() {
 create_symlinks() {
   for entry in "${files_and_paths[@]}"; do
     IFS=":" read -r source_file destination_path <<< "$entry"
+    mkdir -p "$(dirname "$destination_path")"
     create_symlink "$source_file" "$destination_path"
   done
 }
