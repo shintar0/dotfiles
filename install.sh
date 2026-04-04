@@ -3,6 +3,13 @@
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # ============================
+# サマリー用の記録配列
+# ============================
+SUMMARY_PACKAGES=()
+SUMMARY_SYMLINKS=()
+SUMMARY_ENV=()
+
+# ============================
 # 共通：パッケージファイルを読み込んでインストール
 # ============================
 install_from_file() {
@@ -21,6 +28,7 @@ install_from_file() {
     # 空行やコメントはスキップ
     [[ -z "$pkg" || "$pkg" =~ ^# ]] && continue
     sudo apt install -y "$pkg"
+    SUMMARY_PACKAGES+=("$pkg")
   done < "$pkg_file"
 }
 
@@ -62,6 +70,7 @@ create_symlink() {
 
   echo "[INFO] シンボリックリンク作成: $destination_path → $source_file"
   ln -sf "$source_file" "$destination_path"
+  SUMMARY_SYMLINKS+=("$destination_path → $source_file")
 }
 
 create_symlinks() {
@@ -77,9 +86,11 @@ check_environment() {
   if [ "$DOTFILES_GIT_REBASE" = "true" ]; then
     echo "[INFO] GITのPULLはリベースモードに設定されます"
     git config --global pull.rebase true
+    SUMMARY_ENV+=("DOTFILES_GIT_REBASE=true  → git pull はリベースモード")
   else
     echo "[INFO] GITのPULLはマージモードに設定されます"
     git config --global pull.rebase false
+    SUMMARY_ENV+=("DOTFILES_GIT_REBASE=false → git pull はマージモード")
   fi
 
   # fish（DOTFILES_FISH）
@@ -101,6 +112,7 @@ check_environment() {
     fish -c "fisher update"
     # デフォルトシェルをfishに変更
     chsh -s /usr/bin/fish
+    SUMMARY_ENV+=("DOTFILES_FISH=true        → fish インストール・デフォルトシェル変更")
   fi
 
   # ClaudeCode (DOTFILES_CLAUDE_CODE)
@@ -108,12 +120,57 @@ check_environment() {
     echo "[INFO] ClaudeCodeのインストールを開始します"
     if curl -fsSL https://claude.ai/install.sh | bash; then
       echo "[INFO] ClaudeCodeのインストールが完了しました"
+      SUMMARY_ENV+=("DOTFILES_CLAUDE_CODE=true → Claude Code インストール済み")
     else
       echo "[ERROR] ClaudeCodeのインストールに失敗しました" >&2
+      SUMMARY_ENV+=("DOTFILES_CLAUDE_CODE=true → Claude Code インストール失敗")
     fi
   fi
 }
 
+
+# ============================
+# サマリー表示
+# ============================
+print_summary() {
+  echo ""
+  echo "============================================"
+  echo "  インストール結果サマリー"
+  echo "============================================"
+
+  echo ""
+  echo "【インストールしたパッケージ】"
+  if [ ${#SUMMARY_PACKAGES[@]} -eq 0 ]; then
+    echo "  (なし)"
+  else
+    for pkg in "${SUMMARY_PACKAGES[@]}"; do
+      echo "  - $pkg"
+    done
+  fi
+
+  echo ""
+  echo "【作成したシンボリックリンク】"
+  if [ ${#SUMMARY_SYMLINKS[@]} -eq 0 ]; then
+    echo "  (なし)"
+  else
+    for link in "${SUMMARY_SYMLINKS[@]}"; do
+      echo "  - $link"
+    done
+  fi
+
+  echo ""
+  echo "【環境設定 (環境変数)】"
+  if [ ${#SUMMARY_ENV[@]} -eq 0 ]; then
+    echo "  (なし)"
+  else
+    for env in "${SUMMARY_ENV[@]}"; do
+      echo "  - $env"
+    done
+  fi
+
+  echo ""
+  echo "============================================"
+}
 
 # ============================
 # 実行フロー
@@ -121,4 +178,5 @@ check_environment() {
 install_packages
 create_symlinks
 check_environment
+print_summary
 echo "[INFO] 完了しました！"
