@@ -48,6 +48,8 @@ abbr gp "git push"
 abbr gl "git pull"
 abbr gr "git reset --soft HEAD^"
 abbr gbd "git branch --merged main | grep -v "main" | xargs git branch -d"
+abbr gsc "git switch -c"
+abbr gsm "git switch main"
 
 # ============================
 # 色設定（必要最低限）
