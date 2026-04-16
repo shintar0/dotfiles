@@ -9,7 +9,6 @@
 
 - bash
 - ClaudeCode
-- fish
 - git
 
 ## ENV
@@ -29,16 +28,6 @@
 
 - true: `rebase`
 - false: `merge`
-
-### `DOTFILES_FISH`
-
-> 指定なし -> false
-
-- true: `fish`
-- false: `bash`
-
-> [!IMPORTANT]
-> fishに変更した場合は`sudo reboot`など一度ログアウトしないと反映されないことに注意。
 
 ### `DOTFILES_CLAUDE_CODE`
 
@@ -63,8 +52,6 @@ trueの場合のみClaudeCodeのインストールを実施
 
 ```txt
 dotfiles/
-├ .config/
-│ └ fish/            # fishの設定フォルダ 
 ├ bash/              # envごとの読込設定ファイル
 ├ packages/          # envごとのインストールパッケージファイル
 ├ .bashrc            # bash設定ファイル（ハブ）
