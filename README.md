@@ -4,6 +4,7 @@
 
 - ubuntu
 - debian
+- macOS（予定）
 
 ## Target
 
@@ -43,6 +44,23 @@ trueの場合のみClaudeCodeのインストールを実施
 
 > [!TIP]
 > 認証情報については `claude` コマンドでのログイン（[参考](https://code.claude.com/docs/ja/quickstart#%E3%82%B9%E3%83%86%E3%83%83%E3%83%97-2%EF%BC%9A%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%81%AB%E3%83%AD%E3%82%B0%E3%82%A4%E3%83%B3%E3%81%99%E3%82%8B)）を想定。詳しくは[Claude](docs.md#claude)を参照
+
+### `DOTFILES_MAC`
+
+> [!NOTE]
+> 現在`dotfiles`はMacには未対応
+
+trueの場合下記の処理を追加（予定）
+
+- [homebrew](https://brew.sh/ja/)に対応（予定）
+- `.bash_profile`（予定）
+    - macOS にログインしたときに表示される “zsh がデフォルトになりました” という案内メッセージを表示しない（予定）
+    - macOS の bash は .bashrc を自動で読み込まないのでログインシェルでも .bashrc を読み込むようにする（予定）
+- `packages/brew_mac.txt`（予定）
+    - [docker-compose](https://docs.docker.com/compose/)（予定）    
+    - [ghostty](https://ghostty.org/)（予定）
+    - [mise](https://mise.jdx.dev/)（予定）
+    
 
 ## Usage
 

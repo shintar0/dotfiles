@@ -106,6 +106,10 @@ check_environment() {
       SUMMARY_ENV+=("DOTFILES_CLAUDE_CODE=true → Claude Code インストール失敗")
     fi
   fi
+
+  ## Macの場合
+  # Homebrewのインストール
+  # docker-compose, ghostty, miseのインストール
 }
 
 
