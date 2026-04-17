@@ -2,15 +2,15 @@
 
 ## OS
 
-- ubuntu
 - debian
+- ubuntu
 - macOS（予定）
 
 ## Target
 
 - bash
 - bat
-- ClaudeCode
+- claude
 - eza
 - fzf
 - git
@@ -19,6 +19,15 @@
 - ripgrep
 
 ## ENV
+
+### `DOTFILES_CLAUDE_CODE`
+
+> 指定なし -> false
+
+trueの場合のみClaudeCodeのインストールを実施
+
+> [!TIP]
+> 認証情報については `claude` コマンドでのログイン（[参考](https://code.claude.com/docs/ja/quickstart#%E3%82%B9%E3%83%86%E3%83%83%E3%83%97-2%EF%BC%9A%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%81%AB%E3%83%AD%E3%82%B0%E3%82%A4%E3%83%B3%E3%81%99%E3%82%8B)）を想定。詳しくは[Claude](docs.md#claude)を参照
 
 ### `DOTFILES_DEVCONTAINER`
 
@@ -35,15 +44,6 @@
 
 - true: `rebase`
 - false: `merge`
-
-### `DOTFILES_CLAUDE_CODE`
-
-> 指定なし -> false
-
-trueの場合のみClaudeCodeのインストールを実施
-
-> [!TIP]
-> 認証情報については `claude` コマンドでのログイン（[参考](https://code.claude.com/docs/ja/quickstart#%E3%82%B9%E3%83%86%E3%83%83%E3%83%97-2%EF%BC%9A%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%81%AB%E3%83%AD%E3%82%B0%E3%82%A4%E3%83%B3%E3%81%99%E3%82%8B)）を想定。詳しくは[Claude](docs.md#claude)を参照
 
 ### `DOTFILES_MAC`
 
@@ -64,10 +64,10 @@ trueの場合下記の処理を追加（予定）
 
 ## Usage
 
-- `install.sh`: インストーラ実行コマンド（PKGインストール, SL作成, 設定の反映）
-- `make_executable.sh`: （dev）shファイルを実行可能に一括変更
 - `clean.sh`: dotfiles の再インストールを安全に行うためのクリーン処理
     - `--dry-run`: ドライランオプションをつけることで実行はされず、影響だけ確認できます。
+- `install.sh`: インストーラ実行コマンド（PKGインストール, SL作成, 設定の反映）
+- `make_executable.sh`: （dev）shファイルを実行可能に一括変更
 
 > [!TIP]
 > VSCodeDevcontainerではDockerfileでrepositoryをclone, `install.sh`を実行すること。dotfilesの変更を適用させる場合はキャッシュを使わずリビルドする必要がある。
