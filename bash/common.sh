@@ -39,6 +39,13 @@ sg=31:\
 tw=1;34:\
 ow=1;34:"
 
+#####
+# fzf（検索）
+[ -f /usr/local/opt/fzf/shell/completion.bash ] && \
+  source /usr/local/opt/fzf/shell/completion.bash
+[ -f /usr/local/opt/fzf/shell/key-bindings.bash ] && \
+  source /usr/local/opt/fzf/shell/key-bindings.bash
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;

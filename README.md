@@ -11,6 +11,7 @@
 - bat
 - ClaudeCode
 - eza
+- fzf
 - git
 - git-delta
 - neovim
