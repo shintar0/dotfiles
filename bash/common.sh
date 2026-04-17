@@ -2,6 +2,8 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+export PATH="$HOME/.local/bin:$PATH"
+
 #####
 # alias
 alias cat='bat'
