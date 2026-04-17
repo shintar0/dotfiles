@@ -110,6 +110,9 @@ check_environment() {
     echo "[INFO] Host向けの環境設定を行います（未対応）"
     # Ghostty
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
+    # starship
+    curl -sS https://starship.rs/install.sh | sh
+    starship preset gruvbox-rainbow -o ~/.config/starship.toml
     # TODO: パッケージ追加インストール
   fi
 }

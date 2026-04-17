@@ -9,9 +9,9 @@ source ~/dotfiles/bash/common.sh
 # fi
 
 # ===== Host向けの設定 =====
-# if [ "$DOTFILES_HOST" = "true" ]; then
-  # todo: Host向けの設定
-# else
-  # DOTFILES_HOST=false
-# fi
+if [ "$DOTFILES_HOST" = "true" ] ; then
+    eval "$(starship init bash)"
+fi
 
+# todo: fix#13
+eval "$(starship init bash)"

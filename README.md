@@ -18,6 +18,7 @@
 - ghostty
 - neovim
 - ripgrep
+- starship
 
 ## ENV
 
