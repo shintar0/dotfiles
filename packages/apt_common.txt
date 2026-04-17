@@ -4,3 +4,4 @@ eza
 fzf
 git-delta
 neovim
+ripgrep

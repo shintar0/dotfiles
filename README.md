@@ -15,6 +15,7 @@
 - git
 - git-delta
 - neovim
+- ripgrep
 
 ## ENV
 
