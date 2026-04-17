@@ -1,4 +1,3 @@
-bat
 neovim
 ripgrep
 fzf

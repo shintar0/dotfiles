@@ -8,6 +8,7 @@
 ## Target
 
 - bash
+- bat
 - ClaudeCode
 - eza
 - git

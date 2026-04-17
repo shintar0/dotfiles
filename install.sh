@@ -55,6 +55,7 @@ files_and_paths=(
   ".bashrc:$HOME/.bashrc"
   ".gitconfig:$HOME/.gitconfig"
   ".claude/CLAUDE.md:$HOME/.claude/CLAUDE.md"
+  ".config/bat/config:$HOME/.config/bat/config"
 )
 
 create_symlink() {
