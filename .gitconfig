@@ -1,9 +1,28 @@
 [user]
         email = 133033959+shintar0@users.noreply.github.com
         name = shintar0
+
 [core]
         editor = vi
+        pager = delta
+
 [credential]
         helper = store
+
 [pull]
-	rebase = true
+        rebase = true
+
+[interactive]
+        diffFilter = delta --color-only
+
+[delta]
+        navigate = true
+        line-numbers = true
+        side-by-side = true
+        syntax-theme = ansi
+
+[merge]
+        conflictstyle = diff3
+
+[diff]
+        colorMoved = default
