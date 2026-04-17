@@ -39,13 +39,6 @@ install_packages() {
   sudo apt update
   # 共通パッケージ
   install_from_file "$DOTFILES_DIR/packages/apt_common.txt"
-
-  # devcontainer or local
-  if [ "$DOTFILES_DEVCONTAINER" = "true" ]; then
-    install_from_file "$DOTFILES_DIR/packages/apt_devcontainer.txt"
-  else
-    install_from_file "$DOTFILES_DIR/packages/apt_local.txt"
-  fi
 }
 
 # ============================
