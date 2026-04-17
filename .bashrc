@@ -13,3 +13,8 @@ fi
 if [ "$DOTFILES_MAC" = "true" ]; then
   # todo: Mac用の設定
 fi
+
+# ===== Host向けの設定 =====
+if [ "$DOTFILES_HOST" = "true" ]; then
+  # todo: Host向けの設定
+fi

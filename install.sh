@@ -110,6 +110,12 @@ check_environment() {
   ## Macの場合
   # Homebrewのインストール
   # docker-compose, ghostty, miseのインストール
+
+  ## Host向け
+  if [ "$DOTFILES_HOST" = "true" ]; then
+    echo "[INFO] Host向けの環境設定を行います（未対応）"
+    # TODO: パッケージ追加インストール
+  fi
 }
 
 

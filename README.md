@@ -58,9 +58,25 @@ trueの場合下記の処理を追加（予定）
     - macOS の bash は .bashrc を自動で読み込まないのでログインシェルでも .bashrc を読み込むようにする（予定）
 - `packages/brew_mac.txt`（予定）
     - [docker-compose](https://docs.docker.com/compose/)（予定）    
-    - [ghostty](https://ghostty.org/)（予定）
-    - [mise](https://mise.jdx.dev/)（予定）
-    
+
+### `DOTFILES_HOST`
+
+> [!NOTE]
+> 現在`dotfiles`は`DOTFILES_HOST`には未対応
+
+下記全て予定
+
+- `packages/apt_host.txt`
+    - [ghostty](https://ghostty.org/)
+        - テーマ: UDEV Gothic 35NFLG
+        - フォント: Gruvbox Dark
+    - [mise](https://mise.jdx.dev/)
+    - [starship](https://starship.rs/ja-JP/)
+        - プリセット: [Gruvbox Rainbow](https://starship.rs/ja-JP/presets/gruvbox-rainbow)
+    - [VisualStudioCode](https://code.visualstudio.com/)
+        - [拡張] 日本語対応
+        - [拡張] テーマ
+        - settings.json
 
 ## Usage
 
