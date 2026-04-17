@@ -12,6 +12,7 @@
 - ClaudeCode
 - eza
 - git
+- neovim
 
 ## ENV
 

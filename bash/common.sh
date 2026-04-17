@@ -8,6 +8,8 @@ alias cat='bat'
 alias ls='eza --icons'
 alias lsa='eza -la --icons'
 alias lst='eza --tree --icons'
+alias vi='nvim'
+alias vim='nvim'
 
 #####
 # eza

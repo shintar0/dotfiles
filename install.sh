@@ -56,6 +56,7 @@ files_and_paths=(
   ".gitconfig:$HOME/.gitconfig"
   ".claude/CLAUDE.md:$HOME/.claude/CLAUDE.md"
   ".config/bat/config:$HOME/.config/bat/config"
+  ".config/nvim/init.lua:$HOME/.config/nvim/init.lua"
 )
 
 create_symlink() {
