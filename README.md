@@ -9,6 +9,7 @@
 
 - bash
 - ClaudeCode
+- eza
 - git
 
 ## ENV

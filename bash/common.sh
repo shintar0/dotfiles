@@ -2,6 +2,40 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+#####
+# alias
+alias ls='eza --icons'
+alias lsa='eza -la --icons'
+alias lst='eza --tree --icons'
+
+#####
+# eza
+# ANSIカラーのみを使ったLS_COLORS（ターミナルテーマに完全追従）
+export LS_COLORS="\
+di=1;34:\
+ln=36:\
+so=35:\
+pi=33:\
+ex=32:\
+bd=1;33:\
+cd=1;33:\
+su=31:\
+sg=31:\
+tw=1;34:\
+ow=1;34:"
+export EZA_COLORS="\
+di=1;34:\
+ln=36:\
+so=35:\
+pi=33:\
+ex=32:\
+bd=1;33:\
+cd=1;33:\
+su=31:\
+sg=31:\
+tw=1;34:\
+ow=1;34:"
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
