@@ -15,6 +15,7 @@
 - fzf
 - git
 - git-delta
+- ghostty
 - neovim
 - ripgrep
 

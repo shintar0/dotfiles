@@ -49,6 +49,7 @@ files_and_paths=(
   ".gitconfig:$HOME/.gitconfig"
   ".claude/CLAUDE.md:$HOME/.claude/CLAUDE.md"
   ".config/bat/config:$HOME/.config/bat/config"
+  ".config/ghostty/config.ghostty:$HOME/.config/ghostty/config.ghostty"
   ".config/nvim/init.lua:$HOME/.config/nvim/init.lua"
 )
 
@@ -107,6 +108,8 @@ check_environment() {
   ## Host向け
   if [ "$DOTFILES_HOST" = "true" ]; then
     echo "[INFO] Host向けの環境設定を行います（未対応）"
+    # Ghostty
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
     # TODO: パッケージ追加インストール
   fi
 }
