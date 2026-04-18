@@ -53,10 +53,20 @@ ow=1;34:"
 
 #####
 # fzf（検索）
-[ -f /usr/local/opt/fzf/shell/completion.bash ] && \
-  source /usr/local/opt/fzf/shell/completion.bash
-[ -f /usr/local/opt/fzf/shell/key-bindings.bash ] && \
-  source /usr/local/opt/fzf/shell/key-bindings.bash
+# macOS (Homebrew)
+if [ -f /usr/local/opt/fzf/shell/completion.bash ]; then
+    source /usr/local/opt/fzf/shell/completion.bash
+fi
+if [ -f /usr/local/opt/fzf/shell/key-bindings.bash ]; then
+    source /usr/local/opt/fzf/shell/key-bindings.bash
+fi
+# Ubuntu (apt)
+if [ -f /usr/share/doc/fzf/examples/completion.bash ]; then
+    source /usr/share/doc/fzf/examples/completion.bash
+fi
+if [ -f /usr/share/doc/fzf/examples/key-bindings.bash ]; then
+    source /usr/share/doc/fzf/examples/key-bindings.bash
+fi
 
 # If not running interactively, don't do anything
 case $- in
