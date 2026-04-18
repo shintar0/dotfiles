@@ -135,6 +135,27 @@ check_environment() {
       SUMMARY_ENV+=("DOTFILES_HOST=true → Google Chrome インストール失敗")
     fi
     rm -f "$tmpdeb"
+
+    # UDEVGothic35NFLG
+    FONT_DIR="$HOME/.local/share/fonts"
+    FONT_TMP="/tmp/udev-gothic"
+    UDEV_GOTHIC_URL=$(curl -fsSL https://api.github.com/repos/yuru7/udev-gothic/releases/latest \
+      | grep -oP '"browser_download_url":\s*"\K[^"]+UDEVGothic_NF[^"]+\.zip')
+
+    mkdir -p "$FONT_DIR" "$FONT_TMP"
+
+    if curl -fsSL -o "$FONT_TMP/udev-gothic.zip" "$UDEV_GOTHIC_URL" \
+      && unzip -o "$FONT_TMP/udev-gothic.zip" -d "$FONT_TMP" \
+      && find "$FONT_TMP" -name "*.ttf" -exec cp {} "$FONT_DIR/" \; \
+      && fc-cache -fv; then
+      echo "[INFO] UDEV Gothic 35NFLGのインストールが完了しました"
+      SUMMARY_ENV+=("DOTFILES_HOST=true → UDEV Gothic 35NFLG インストール済み")
+    else
+      echo "[ERROR] UDEV Gothic 35NFLGのインストールに失敗しました" >&2
+      SUMMARY_ENV+=("DOTFILES_HOST=true → UDEV Gothic 35NFLG インストール失敗")
+    fi
+
+    rm -rf "$FONT_TMP"
   fi
 }
 

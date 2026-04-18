@@ -1,2 +1,5 @@
 theme = Gruvbox Dark
 background-opacity = 0.85
+font-family = UDEV Gothic 35NFLG
+font-size = 14
+adjust-cell-height = 10%

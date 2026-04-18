@@ -20,6 +20,7 @@
 - neovim
 - ripgrep
 - starship
+- udev-gothic
 
 ## ENV
 
