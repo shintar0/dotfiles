@@ -6,12 +6,22 @@ export PATH="$HOME/.local/bin:$PATH"
 
 #####
 # alias
-alias cat='bat'
 alias ls='eza --icons'
 alias lsa='eza -la --icons'
 alias lst='eza --tree --icons'
 alias vi='nvim'
 alias vim='nvim'
+
+## alias: bat
+## ubuntu版のみ実行コマンドが batcat になる
+if [ -f /etc/os-release ] ; then
+    . /etc/os-release
+    if [ "$ID" = "ubuntu" ] ; then
+        alias cat='batcat'
+    else
+        alias cat='bat'
+    fi
+fi
 
 #####
 # eza
