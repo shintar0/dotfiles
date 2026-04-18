@@ -88,6 +88,8 @@ check_environment() {
     git config --global pull.rebase false
     SUMMARY_ENV+=("DOTFILES_GIT_REBASE=false → git pull はマージモード")
   fi
+  # tabをspace*8に変更
+  sed -i 's/\t/        /g' .gitconfig
 
   # ClaudeCode (DOTFILES_CLAUDE_CODE)
   if [ "$DOTFILES_CLAUDE_CODE" = "true" ]; then
