@@ -136,6 +136,29 @@ check_environment() {
     fi
     rm -f "$tmpdeb"
 
+    # Obsidian
+    tmpdeb_obsidian="/tmp/obsidian.deb"
+    OBSIDIAN_VERSION=$(curl -sI "https://github.com/obsidianmd/obsidian-releases/releases/latest" | grep -i location | sed 's/.*tag\/v//' | tr -d '\r\n')
+    if curl -fsSL -o "$tmpdeb_obsidian" "https://github.com/obsidianmd/obsidian-releases/releases/latest/download/obsidian_${OBSIDIAN_VERSION}_amd64.deb" \
+      && sudo apt install -y "$tmpdeb_obsidian"; then
+        SUMMARY_ENV+=("DOTFILES_HOST=true → Obsidian インストール済み")
+    else
+        echo "[ERROR] Obsidianのインストールに失敗しました" >&2
+        SUMMARY_ENV+=("DOTFILES_HOST=true → Obsidian インストール失敗")
+    fi
+    rm -f "$tmpdeb_obsidian"
+    # Obsidian vault clone
+    if [ ! -d "$HOME/Documents/obsidian-vault" ]; then
+        if git clone git@github.com:shintar0/obsidian-vault.git "$HOME/Documents/obsidian-vault"; then
+            SUMMARY_ENV+=("DOTFILES_HOST=true → Obsidian vault clone済み")
+        else
+            echo "[ERROR] Obsidian vaultのcloneに失敗しました" >&2
+            SUMMARY_ENV+=("DOTFILES_HOST=true → Obsidian vault clone失敗")
+        fi
+    else
+        echo "[INFO] Obsidian vaultはすでに存在します: $HOME/Documents/obsidian-vault"
+    fi
+
     # UDEVGothic35NFLG
     FONT_DIR="$HOME/.local/share/fonts"
     FONT_TMP="/tmp/udev-gothic"

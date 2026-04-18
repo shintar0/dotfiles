@@ -18,6 +18,7 @@
 - git-delta
 - ghostty
 - neovim
+- obsidian
 - ripgrep
 - starship
 - udev-gothic
