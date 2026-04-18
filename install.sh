@@ -113,7 +113,7 @@ check_environment() {
     # Ghostty
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
     # starship
-    curl -sS https://starship.rs/install.sh | sh
+    curl -sS https://starship.rs/install.sh | sh  -s -- --yes
     starship preset gruvbox-rainbow -o ~/.config/starship.toml
     # chrome
     tmpdeb="/tmp/google-chrome.deb"
