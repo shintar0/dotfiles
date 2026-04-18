@@ -88,8 +88,10 @@ check_environment() {
     git config --global pull.rebase false
     SUMMARY_ENV+=("DOTFILES_GIT_REBASE=false → git pull はマージモード")
   fi
+
   # tabをspace*8に変更
   sed -i 's/\t/        /g' .gitconfig
+  SUMMARY_ENV+=(".gitconfig → タブをスペース8個に変換")
 
   # ClaudeCode (DOTFILES_CLAUDE_CODE)
   if [ "$DOTFILES_CLAUDE_CODE" = "true" ]; then
@@ -103,27 +105,38 @@ check_environment() {
     fi
   fi
 
-  ## Macの場合
-  # Homebrewのインストール
-  # docker-compose, ghostty, miseのインストール
-
-  ## Host向け
   if [ "$DOTFILES_HOST" = "true" ]; then
-    echo "[INFO] Host向けの環境設定を行います（未対応）"
+    echo "[INFO] Host向けの環境設定を行います"
+
     # Ghostty
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
+    if /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"; then
+      SUMMARY_ENV+=("DOTFILES_HOST=true → Ghostty インストール済み")
+    else
+      echo "[ERROR] Ghosttyのインストールに失敗しました" >&2
+      SUMMARY_ENV+=("DOTFILES_HOST=true → Ghostty インストール失敗")
+    fi
+
     # starship
-    curl -sS https://starship.rs/install.sh | sh  -s -- --yes
-    starship preset gruvbox-rainbow -o ~/.config/starship.toml
+    if curl -sS https://starship.rs/install.sh | sh -s -- --yes; then
+      starship preset gruvbox-rainbow -o ~/.config/starship.toml
+      SUMMARY_ENV+=("DOTFILES_HOST=true → starship インストール済み (gruvbox-rainbow)")
+    else
+      echo "[ERROR] starshipのインストールに失敗しました" >&2
+      SUMMARY_ENV+=("DOTFILES_HOST=true → starship インストール失敗")
+    fi
+
     # chrome
     tmpdeb="/tmp/google-chrome.deb"
-    curl -fsSL -o "$tmpdeb" https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    sudo apt install -y "$tmpdeb"
+    if curl -fsSL -o "$tmpdeb" https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
+      && sudo apt install -y "$tmpdeb"; then
+      SUMMARY_ENV+=("DOTFILES_HOST=true → Google Chrome インストール済み")
+    else
+      echo "[ERROR] Google Chromeのインストールに失敗しました" >&2
+      SUMMARY_ENV+=("DOTFILES_HOST=true → Google Chrome インストール失敗")
+    fi
     rm -f "$tmpdeb"
-    # TODO: パッケージ追加インストール
   fi
 }
-
 
 # ============================
 # サマリー表示
