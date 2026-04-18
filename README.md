@@ -21,6 +21,7 @@
 - ripgrep
 - starship
 - udev-gothic
+- vscode
 
 ## ENV
 

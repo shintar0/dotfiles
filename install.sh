@@ -156,6 +156,18 @@ check_environment() {
     fi
 
     rm -rf "$FONT_TMP"
+
+    # VSCode
+    echo "code code/add-microsoft-repo boolean true" | sudo debconf-set-selections
+    tmpdeb_vscode="/tmp/vscode.deb"
+    if curl -fsSL -o "$tmpdeb_vscode" "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64" \
+      && sudo apt install -y "$tmpdeb_vscode"; then
+        SUMMARY_ENV+=("DOTFILES_HOST=true → VSCode インストール済み")
+    else
+      echo "[ERROR] VSCodeのインストールに失敗しました" >&2
+      SUMMARY_ENV+=("DOTFILES_HOST=true → VSCode インストール失敗")
+    fi
+    rm -f "$tmpdeb_vscode"
   fi
 }
 
