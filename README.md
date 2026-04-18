@@ -10,6 +10,7 @@
 
 - bash
 - bat
+- chrome
 - claude
 - eza
 - fzf

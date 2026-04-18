@@ -113,6 +113,11 @@ check_environment() {
     # starship
     curl -sS https://starship.rs/install.sh | sh
     starship preset gruvbox-rainbow -o ~/.config/starship.toml
+    # chrome
+    tmpdeb="/tmp/google-chrome.deb"
+    curl -fsSL -o "$tmpdeb" https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    sudo apt install -y "$tmpdeb"
+    rm -f "$tmpdeb"
     # TODO: パッケージ追加インストール
   fi
 }
