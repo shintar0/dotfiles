@@ -39,6 +39,15 @@ install_packages() {
   sudo apt update
   # 共通パッケージ
   install_from_file "$DOTFILES_DIR/packages/apt_common.txt"
+
+  # aptでインストールしない
+  echo "[INFO] ClaudeCodeのインストールを開始します"
+  if curl -fsSL https://claude.ai/install.sh | bash; then
+    echo "[INFO] ClaudeCodeのインストールが完了しました"
+    SUMMARY_PACKAGES+=("Claude Code")
+  else
+    echo "[ERROR] ClaudeCodeのインストールに失敗しました" >&2
+  fi
 }
 
 # ============================
@@ -92,18 +101,6 @@ check_environment() {
   # tabをspace*8に変更
   sed -i 's/\t/        /g' .gitconfig
   SUMMARY_ENV+=(".gitconfig → タブをスペース8個に変換")
-
-  # ClaudeCode (DOTFILES_CLAUDE_CODE)
-  if [ "$DOTFILES_CLAUDE_CODE" = "true" ]; then
-    echo "[INFO] ClaudeCodeのインストールを開始します"
-    if curl -fsSL https://claude.ai/install.sh | bash; then
-      echo "[INFO] ClaudeCodeのインストールが完了しました"
-      SUMMARY_ENV+=("DOTFILES_CLAUDE_CODE=true → Claude Code インストール済み")
-    else
-      echo "[ERROR] ClaudeCodeのインストールに失敗しました" >&2
-      SUMMARY_ENV+=("DOTFILES_CLAUDE_CODE=true → Claude Code インストール失敗")
-    fi
-  fi
 
   if [ "$DOTFILES_HOST" = "true" ]; then
     echo "[INFO] Host向けの環境設定を行います"

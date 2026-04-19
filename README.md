@@ -26,15 +26,6 @@
 
 ## ENV
 
-### `DOTFILES_CLAUDE_CODE`
-
-> 指定なし -> false
-
-trueの場合のみClaudeCodeのインストールを実施
-
-> [!TIP]
-> 認証情報については `claude` コマンドでのログイン（[参考](https://code.claude.com/docs/ja/quickstart#%E3%82%B9%E3%83%86%E3%83%83%E3%83%97-2%EF%BC%9A%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%81%AB%E3%83%AD%E3%82%B0%E3%82%A4%E3%83%B3%E3%81%99%E3%82%8B)）を想定。詳しくは[Claude](docs.md#claude)を参照
-
 ### `DOTFILES_GIT_REBASE`
 
 > 指定なし -> false
