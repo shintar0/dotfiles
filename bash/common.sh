@@ -2,6 +2,22 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+#####
+# bash settings
+# 保存行数
+export HISTSIZE=10000
+# ファイルサイズ
+export HISTFILESIZE=50000
+# まったく同じコマンドを連続で実行した場合、履歴に重複を残さない
+# パスワードを誤って履歴に残さない -> 先頭にスペースを入れたコマンドは履歴に残らない
+export HISTCONTROL=ignoredups:ignorespace
+# 履歴に「実行した日時」を付ける設定
+export HISTTIMEFORMAT="%F %T "
+# 履歴ファイルを「上書き」ではなく「追記」する
+shopt -s histappend
+# 同時に複数のターミナルを開いても履歴が失われない
+PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND"
+
 export PATH="$HOME/.local/bin:$PATH"
 
 #####
@@ -73,17 +89,6 @@ case $- in
     *i*) ;;
       *) return;;
 esac
-
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
-HISTCONTROL=ignoreboth
-
-# append to the history file, don't overwrite it
-shopt -s histappend
-
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
