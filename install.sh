@@ -178,12 +178,37 @@ check_environment() {
 
     rm -rf "$FONT_TMP"
 
-    # VSCode
+# VSCode
     echo "code code/add-microsoft-repo boolean true" | sudo debconf-set-selections
     tmpdeb_vscode="/tmp/vscode.deb"
     if curl -fsSL -o "$tmpdeb_vscode" "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64" \
       && sudo apt install -y "$tmpdeb_vscode"; then
         SUMMARY_ENV+=("DOTFILES_HOST=true → VSCode インストール済み")
+
+        # 拡張機能のインストール
+        vscode_ext_file="$DOTFILES_DIR/vscode/extensions.txt"
+        if [[ -f "$vscode_ext_file" ]]; then
+          echo "VSCode 拡張機能をインストール中..."
+          ext_ok=0
+          ext_fail=0
+          while IFS= read -r ext || [[ -n "$ext" ]]; do
+            [[ -z "$ext" || "$ext" == \#* ]] && continue
+            if code --install-extension "$ext" --force; then
+              echo "  ✓ $ext"
+              (( ext_ok++ ))
+            else
+              echo "  [WARN] 拡張機能のインストール失敗: $ext" >&2
+              (( ext_fail++ ))
+            fi
+          done < "$vscode_ext_file"
+          if (( ext_fail == 0 )); then
+            SUMMARY_ENV+=("DOTFILES_HOST=true → VSCode Extensions: ${ext_ok}件 インストール済み")
+          else
+            SUMMARY_ENV+=("DOTFILES_HOST=true → VSCode Extensions: ${ext_ok}件 成功 / ${ext_fail}件 失敗")
+          fi
+        else
+          echo "[WARN] 拡張機能リストが見つかりません: $vscode_ext_file" >&2
+        fi
     else
       echo "[ERROR] VSCodeのインストールに失敗しました" >&2
       SUMMARY_ENV+=("DOTFILES_HOST=true → VSCode インストール失敗")

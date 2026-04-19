@@ -1,0 +1,4 @@
+github.copilot-chat
+ms-ceintl.vscode-language-pack-ja
+ms-vscode-remote.remote-containers
+seatonjiang.gitmoji-vscode
