@@ -37,7 +37,7 @@ trueの場合のみClaudeCodeのインストールを実施
 
 ### `DOTFILES_GIT_REBASE`
 
-> 指定なし -> true
+> 指定なし -> false
 
 - true: `rebase`
 - false: `merge`
