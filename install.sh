@@ -324,8 +324,9 @@ EOF
     SUMMARY_ENV+=("DOTFILES_HOST=true → KVM: $USER を kvm グループに追加 (再ログイン後に有効)")
 
     # 3. Docker Desktop .deb のダウンロード＆インストール
-    tmpdeb_docker="/tmp/docker-desktop-amd64.deb"
-    if curl -fsSL -o "$tmpdeb_docker" "https://desktop.docker.com/linux/main/amd64/docker-desktop-amd64.deb" \
+    arch=$(dpkg --print-architecture)
+    tmpdeb_docker="/tmp/docker-desktop-${arch}.deb"
+    if curl -fsSL -o "$tmpdeb_docker" "https://desktop.docker.com/linux/main/${arch}/docker-desktop-${arch}.deb" \
       && sudo apt install -y "$tmpdeb_docker"; then
       # 4. ログイン時に自動起動
       systemctl --user enable docker-desktop 2>/dev/null || true
