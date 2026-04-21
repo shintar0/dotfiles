@@ -61,9 +61,16 @@ _ZSH_PLUGIN_DIR="${HOME}/.local/share/zsh/plugins"
     && source "${_ZSH_PLUGIN_DIR}/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
 # zsh-abbr: abbreviation ファイルを dotfiles で管理
-ABBR_USER_ABBREVIATIONS_FILE="${HOME}/dotfiles/zsh/abbreviations"
+ABBR_USER_ABBREVIATIONS_FILE="${DOTFILES_DIR}/zsh/abbreviations"
 [ -f "${_ZSH_PLUGIN_DIR}/zsh-abbr/zsh-abbr.zsh" ] \
     && source "${_ZSH_PLUGIN_DIR}/zsh-abbr/zsh-abbr.zsh"
+
+# cat: batcat (Ubuntu) / bat (その他) を abbr で設定
+if command -v batcat >/dev/null 2>&1; then
+    abbr --quiet --force cat="batcat"
+elif command -v bat >/dev/null 2>&1; then
+    abbr --quiet --force cat="bat"
+fi
 
 
 # zsh-syntax-highlighting は必ず最後にsource

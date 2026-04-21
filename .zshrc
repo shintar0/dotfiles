@@ -1,10 +1,13 @@
+# ===== dotfiles のパス（クローン先を変えた場合はここを修正）=====
+DOTFILES_DIR="${HOME}/dotfiles"
+
 # ===== 環境変数読み込み =====
-if [ -f ~/dotfiles/zsh/env.zsh ]; then
-    source ~/dotfiles/zsh/env.zsh
+if [ -f "${DOTFILES_DIR}/zsh/env.zsh" ]; then
+    source "${DOTFILES_DIR}/zsh/env.zsh"
 fi
 
 # ===== 共通設定 =====
-source ~/dotfiles/zsh/common.zsh
+source "${DOTFILES_DIR}/zsh/common.zsh"
 
 # ===== Macの場合 =====
 # if [ "$DOTFILES_MAC" = "true" ]; then
