@@ -51,6 +51,32 @@ install_packages() {
 }
 
 # ============================
+# 1-2. GitHub CLI (gh) のインストール
+# ============================
+install_gh() {
+  if command -v gh &>/dev/null; then
+    echo "[INFO] gh はすでにインストールされています"
+    SUMMARY_PACKAGES+=("gh (既存)")
+    return
+  fi
+
+  echo "[INFO] GitHub CLI (gh) のインストールを開始します"
+  sudo mkdir -p -m 755 /etc/apt/keyrings
+  wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+    | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null
+  sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
+  echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" \
+    | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+  sudo apt update
+  if sudo apt install -y gh; then
+    echo "[INFO] GitHub CLI (gh) のインストールが完了しました"
+    SUMMARY_PACKAGES+=("gh")
+  else
+    echo "[ERROR] GitHub CLI (gh) のインストールに失敗しました" >&2
+  fi
+}
+
+# ============================
 # 2. zshプラグインのインストール
 # ============================
 install_zsh_plugins() {
@@ -318,6 +344,11 @@ print_summary() {
   fi
 
   echo ""
+  echo "【インストール後に必要な作業】"
+  echo "  1. GitHub CLI 認証:"
+  echo "       gh auth login"
+  echo "     ※ ブラウザまたはトークンで認証してください"
+  echo ""
   echo "============================================"
 }
 
@@ -325,6 +356,7 @@ print_summary() {
 # 実行フロー
 # ============================
 install_packages
+install_gh
 install_zsh_plugins
 create_symlinks
 check_environment
