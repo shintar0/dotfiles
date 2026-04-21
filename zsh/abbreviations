@@ -1,3 +1,4 @@
+abbr "cat"="batcat"
 abbr "gr"="git reset --soft HEAD^"
 abbr "ls"="eza --icons"
 abbr "lsa"="eza -la --icons"
