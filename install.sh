@@ -301,6 +301,41 @@ check_environment() {
       SUMMARY_ENV+=("DOTFILES_HOST=true → VSCode インストール失敗")
     fi
     rm -f "$tmpdeb_vscode"
+
+    # Docker Desktop
+    # 1. Docker apt リポジトリのセットアップ
+    sudo apt install -y ca-certificates curl
+    sudo install -m 0755 -d /etc/apt/keyrings
+    sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+    sudo chmod a+r /etc/apt/keyrings/docker.asc
+    sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/ubuntu
+Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+Components: stable
+Architectures: $(dpkg --print-architecture)
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+    sudo apt update
+
+    # 2. KVM 仮想化サポート（Docker Desktop の動作に必須）
+    sudo modprobe kvm
+    sudo usermod -aG kvm "$USER"
+    SUMMARY_ENV+=("DOTFILES_HOST=true → KVM: $USER を kvm グループに追加 (再ログイン後に有効)")
+
+    # 3. Docker Desktop .deb のダウンロード＆インストール
+    arch=$(dpkg --print-architecture)
+    tmpdeb_docker="/tmp/docker-desktop-${arch}.deb"
+    if curl -fsSL -o "$tmpdeb_docker" "https://desktop.docker.com/linux/main/${arch}/docker-desktop-${arch}.deb" \
+      && sudo apt install -y "$tmpdeb_docker"; then
+      # 4. ログイン時に自動起動
+      systemctl --user enable docker-desktop 2>/dev/null || true
+      SUMMARY_ENV+=("DOTFILES_HOST=true → Docker Desktop インストール済み (再ログイン後に利用可能)")
+    else
+      echo "[ERROR] Docker Desktopのインストールに失敗しました" >&2
+      SUMMARY_ENV+=("DOTFILES_HOST=true → Docker Desktop インストール失敗")
+    fi
+    rm -f "$tmpdeb_docker"
   fi
 }
 

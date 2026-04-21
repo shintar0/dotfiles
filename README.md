@@ -2,7 +2,6 @@
 
 ## OS
 
-- debian
 - ubuntu
 - macOS（予定）
 
