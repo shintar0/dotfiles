@@ -178,7 +178,7 @@ check_environment() {
 
     rm -rf "$FONT_TMP"
 
-# VSCode
+    # VSCode
     echo "code code/add-microsoft-repo boolean true" | sudo debconf-set-selections
     tmpdeb_vscode="/tmp/vscode.deb"
     if curl -fsSL -o "$tmpdeb_vscode" "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64" \
