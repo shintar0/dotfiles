@@ -16,8 +16,13 @@ for arg in "$@"; do
 done
 
 files_and_paths=(
-  ".bashrc:$HOME/.bashrc"
+  ".zshrc:$HOME/.zshrc"
   ".gitconfig:$HOME/.gitconfig"
+  ".claude/CLAUDE.md:$HOME/.claude/CLAUDE.md"
+  ".config/bat/config:$HOME/.config/bat/config"
+  ".config/Code/User/settings.json:$HOME/.config/Code/User/settings.json"
+  ".config/ghostty/config.ghostty:$HOME/.config/ghostty/config.ghostty"
+  ".config/nvim/init.lua:$HOME/.config/nvim/init.lua"
 )
 
 # ============================
