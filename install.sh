@@ -24,7 +24,7 @@ install_from_file() {
   echo "[INFO] Installing packages from $pkg_file"
 
   # 1行ずつインストール
-  while IFS= read -r pkg; do
+  while IFS= read -r pkg || [[ -n "$pkg" ]]; do
     # 空行やコメントはスキップ
     [[ -z "$pkg" || "$pkg" =~ ^# ]] && continue
     sudo apt install -y "$pkg"
@@ -51,10 +51,45 @@ install_packages() {
 }
 
 # ============================
-# 2. シンボリックリンク作成
+# 2. zshプラグインのインストール
+# ============================
+install_zsh_plugins() {
+  local plugin_dir="${HOME}/.local/share/zsh/plugins"
+  mkdir -p "$plugin_dir"
+
+  local plugins=(
+    "https://github.com/zsh-users/zsh-autosuggestions"
+    "https://github.com/zsh-users/zsh-syntax-highlighting"
+    "https://github.com/olets/zsh-abbr"
+  )
+
+  for repo in "${plugins[@]}"; do
+    local name="${repo##*/}"
+    if [ -d "${plugin_dir}/${name}" ]; then
+      echo "[INFO] プラグイン更新: ${name}"
+      git -C "${plugin_dir}/${name}" pull --ff-only 2>/dev/null || true
+    else
+      echo "[INFO] プラグインインストール: ${name}"
+      if git clone --depth=1 "$repo" "${plugin_dir}/${name}"; then
+        SUMMARY_PACKAGES+=("zsh plugin: ${name}")
+      else
+        echo "[ERROR] プラグインのインストールに失敗しました: ${name}" >&2
+      fi
+    fi
+  done
+
+  # zsh-abbr のサブモジュール（zsh-job-queue）を初期化
+  if [ -f "${plugin_dir}/zsh-abbr/.gitmodules" ]; then
+    echo "[INFO] zsh-abbr サブモジュールを初期化します"
+    git -C "${plugin_dir}/zsh-abbr" submodule update --init
+  fi
+}
+
+# ============================
+# 3. シンボリックリンク作成
 # ============================
 files_and_paths=(
-  ".bashrc:$HOME/.bashrc"
+  ".zshrc:$HOME/.zshrc"
   ".gitconfig:$HOME/.gitconfig"
   ".claude/CLAUDE.md:$HOME/.claude/CLAUDE.md"
   ".config/bat/config:$HOME/.config/bat/config"
@@ -85,6 +120,32 @@ create_symlinks() {
     mkdir -p "$(dirname "$destination_path")"
     create_symlink "$source_file" "$destination_path"
   done
+}
+
+# ============================
+# 4. デフォルトシェルをzshに設定
+# ============================
+set_default_shell() {
+  local zsh_path
+  zsh_path="$(command -v zsh 2>/dev/null)"
+
+  if [ -z "$zsh_path" ]; then
+    echo "[WARN] zshが見つかりません。デフォルトシェルの変更をスキップします"
+    return
+  fi
+
+  if [ "$SHELL" = "$zsh_path" ]; then
+    echo "[INFO] すでにzshがデフォルトシェルです"
+    SUMMARY_ENV+=("デフォルトシェル → zsh (変更なし)")
+    return
+  fi
+
+  if sudo chsh -s "$zsh_path" "$USER" 2>/dev/null; then
+    echo "[INFO] デフォルトシェルをzshに変更しました: ${zsh_path}"
+    SUMMARY_ENV+=("デフォルトシェル → zsh (${zsh_path})")
+  else
+    echo "[WARN] デフォルトシェルの変更に失敗しました（コンテナ環境では正常です）"
+  fi
 }
 
 # 環境変数による条件分岐（関数）
@@ -264,7 +325,9 @@ print_summary() {
 # 実行フロー
 # ============================
 install_packages
+install_zsh_plugins
 create_symlinks
 check_environment
+set_default_shell
 print_summary
 echo "[INFO] 完了しました！"

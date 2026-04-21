@@ -23,3 +23,32 @@ Claudeは`ANTHROPIC_API_KEY`が環境変数として設定されていると優�
   "source=${localEnv:HOME}/.config/claude,target=/root/.config/claude,type=bind,consistency=cached"
 ]
 ```
+
+## zsh
+
+シェルは zsh を採用している。Ubuntu ホストでは `install.sh` が自動でインストール・デフォルトシェル設定まで行う。
+
+### VSCodeDevcontainerでのベストプラクティス
+
+DevContainer で zsh を使うには `common-utils` feature を追加してデフォルトシェルを zsh に設定する。
+
+```json
+"features": {
+  "ghcr.io/devcontainers/features/common-utils:2": {
+    "installZsh": true,
+    "configureZshAsDefaultShell": true,
+    "installOhMyZsh": false
+  }
+}
+```
+
+dotfiles の `.zshrc` を適用するには、VS Code の dotfiles 機能を使う。
+
+```json
+"dotfiles.repository": "shintar0/dotfiles",
+"dotfiles.installCommand": "bash install.sh"
+```
+
+ただし `install.sh` はホスト向け処理（Ghostty・Chrome・Obsidian など）も含むため、コンテナ内では `DOTFILES_HOST` を設定しないことで自動的にスキップされる。
+
+zsh プラグイン（`zsh-autosuggestions`・`zsh-syntax-highlighting`・`zsh-abbr`）は `install.sh` 実行時に `~/.local/share/zsh/plugins/` へ clone される。

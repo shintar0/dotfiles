@@ -16,7 +16,7 @@ for arg in "$@"; do
 done
 
 files_and_paths=(
-  ".bashrc:$HOME/.bashrc"
+  ".zshrc:$HOME/.zshrc"
   ".gitconfig:$HOME/.gitconfig"
 )
 
