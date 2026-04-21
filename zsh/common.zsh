@@ -62,7 +62,7 @@ _ZSH_PLUGIN_DIR="${HOME}/.local/share/zsh/plugins"
 
 # zsh-abbr: abbreviation ファイルを dotfiles で管理
 ABBR_USER_ABBREVIATIONS_FILE="${DOTFILES_DIR}/zsh/abbreviations"
-ABBR_QUIET=1
+ABBR_QUIETER=1
 [ -f "${_ZSH_PLUGIN_DIR}/zsh-abbr/zsh-abbr.zsh" ] \
     && source "${_ZSH_PLUGIN_DIR}/zsh-abbr/zsh-abbr.zsh"
 
