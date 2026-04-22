@@ -51,7 +51,7 @@ install_packages() {
 }
 
 # ============================
-# 1-2. GitHub CLI (gh) のインストール
+# 2.1 GitHub CLI (gh) のインストール
 # ============================
 install_gh() {
   if command -v gh &>/dev/null; then
@@ -77,7 +77,7 @@ install_gh() {
 }
 
 # ============================
-# 2. zshプラグインのインストール
+# 2.2 zshプラグインのインストール
 # ============================
 install_zsh_plugins() {
   local plugin_dir="${HOME}/.local/share/zsh/plugins"
@@ -112,6 +112,31 @@ install_zsh_plugins() {
 }
 
 # ============================
+# 2.3 eza: 専用リポジトリからインストール
+# ============================
+install_eza() {
+  if command -v eza &>/dev/null; then
+    echo "[INFO] eza はすでにインストールされています"
+    return
+  fi
+
+  echo "[INFO] eza リポジトリを追加します"
+  sudo mkdir -p /etc/apt/keyrings
+  wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc \
+    | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+  echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" \
+    | sudo tee /etc/apt/sources.list.d/gierens.list > /dev/null
+  sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+  sudo apt update
+  if sudo apt install -y eza; then
+    echo "[INFO] eza のインストールが完了しました"
+    SUMMARY_PACKAGES+=("eza")
+  else
+    echo "[ERROR] eza のインストールに失敗しました" >&2
+  fi
+}
+
+# ============================
 # 3. シンボリックリンク作成
 # ============================
 files_and_paths=(
@@ -122,6 +147,7 @@ files_and_paths=(
   ".config/Code/User/settings.json:$HOME/.config/Code/User/settings.json"
   ".config/ghostty/config.ghostty:$HOME/.config/ghostty/config.ghostty"
   ".config/nvim/init.lua:$HOME/.config/nvim/init.lua"
+  ".config/Code/User/settings.json:$HOME/.config/Code/User/settings.json"
 )
 
 create_symlink() {
@@ -393,6 +419,7 @@ print_summary() {
 install_packages
 install_gh
 install_zsh_plugins
+install_eza
 create_symlinks
 check_environment
 set_default_shell

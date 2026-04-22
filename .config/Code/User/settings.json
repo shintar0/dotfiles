@@ -2,5 +2,6 @@
     "editor.fontFamily": "UDEV Gothic 35NFLG",
     "editor.fontSize": 16,
     "terminal.integrated.fontFamily": "UDEV Gothic NFLG",
-    "terminal.integrated.fontSize": 16
+    "terminal.integrated.fontSize": 16,
+    "terminal.integrated.defaultProfile.linux": "zsh"
 }
