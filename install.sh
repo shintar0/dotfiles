@@ -112,7 +112,26 @@ install_zsh_plugins() {
 }
 
 # ============================
-# 2.3 eza: 専用リポジトリからインストール
+# 2.3 starship のインストール
+# ============================
+install_starship() {
+  if command -v starship &>/dev/null; then
+    echo "[INFO] starship はすでにインストールされています"
+    SUMMARY_PACKAGES+=("starship (既存)")
+    return
+  fi
+
+  echo "[INFO] starship のインストールを開始します"
+  if curl -sS https://starship.rs/install.sh | sh -s -- --yes; then
+    echo "[INFO] starship のインストールが完了しました"
+    SUMMARY_PACKAGES+=("starship")
+  else
+    echo "[ERROR] starshipのインストールに失敗しました" >&2
+  fi
+}
+
+# ============================
+# 2.4 eza: 専用リポジトリからインストール
 # ============================
 install_eza() {
   if command -v eza &>/dev/null; then
@@ -148,6 +167,7 @@ files_and_paths=(
   ".config/ghostty/config.ghostty:$HOME/.config/ghostty/config.ghostty"
   ".config/nvim/init.lua:$HOME/.config/nvim/init.lua"
   ".config/Code/User/settings.json:$HOME/.config/Code/User/settings.json"
+  ".config/starship/starship.toml:$HOME/.config/starship.toml"
 )
 
 create_symlink() {
@@ -227,14 +247,8 @@ check_environment() {
       SUMMARY_ENV+=("DOTFILES_HOST=true → Ghostty インストール失敗")
     fi
 
-    # starship
-    if curl -sS https://starship.rs/install.sh | sh -s -- --yes; then
-      starship preset gruvbox-rainbow -o ~/.config/starship.toml
-      SUMMARY_ENV+=("DOTFILES_HOST=true → starship インストール済み (gruvbox-rainbow)")
-    else
-      echo "[ERROR] starshipのインストールに失敗しました" >&2
-      SUMMARY_ENV+=("DOTFILES_HOST=true → starship インストール失敗")
-    fi
+    # starship（設定は .config/starship/starship.toml でシンボリックリンク管理）
+    SUMMARY_ENV+=("DOTFILES_HOST=true → starship 設定: gruvbox-rainbow (dotfiles管理)")
 
     # chrome
     tmpdeb="/tmp/google-chrome.deb"
@@ -419,6 +433,7 @@ print_summary() {
 install_packages
 install_gh
 install_zsh_plugins
+install_starship
 install_eza
 create_symlinks
 check_environment

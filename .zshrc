@@ -14,7 +14,7 @@ source "${DOTFILES_DIR}/zsh/common.zsh"
   # todo: Mac用の設定
 # fi
 
-# ===== Host向けの設定 =====
-if [ "$DOTFILES_HOST" = "true" ] && command -v starship >/dev/null 2>&1; then
+# ===== Starship =====
+if command -v starship >/dev/null 2>&1; then
     eval "$(starship init zsh)"
 fi
