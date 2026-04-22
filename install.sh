@@ -48,6 +48,14 @@ install_packages() {
   else
     echo "[ERROR] ClaudeCodeのインストールに失敗しました" >&2
   fi
+
+  echo "[INFO] GitHub Copilot CLIのインストールを開始します"
+  if curl -fsSL https://gh.io/copilot-install | bash; then
+    echo "[INFO] GitHub Copilot CLIのインストールが完了しました"
+    SUMMARY_PACKAGES+=("GitHub Copilot CLI")
+  else
+    echo "[ERROR] GitHub Copilot CLIのインストールに失敗しました" >&2
+  fi
 }
 
 # ============================
